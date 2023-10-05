@@ -3,7 +3,7 @@ int tower(int n, char A[], char B[], char C[])
 {
 	if(n==1)
 	{
-		printf("\nMove Disk 1 from rod % to rod %s",A,B);
+		printf("\nMove Disk 1 from rod %s to rod %s",A,B);
 		return;	
 	}	
 	tower(n-1,A,C,B);

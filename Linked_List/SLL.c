@@ -49,10 +49,10 @@ void ins_pos(int x, int pos){
 }
 
 void del_begin(){
-    struct node *ptr;
     if(head == NULL)
         printf("List is empty\n");
     else{
+        struct node *ptr;
         printf("Deleted element is %d\n", head->data);
         ptr = head;
         head = head->next;
@@ -61,24 +61,20 @@ void del_begin(){
 }
 
 void del_end(){
-    struct node *ptr, *temp;
     if(head == NULL)
         printf("List is empty\n");
     else if(head->next == NULL){
         printf("Deleted element is %d\n", head->data);
-        ptr = head;
         head = NULL;
-        free(ptr);
+        free(head);
     }
     else{
-        printf("Deleted element is %d\n", head->data);
-        ptr = head;
-        while(ptr->next != NULL){
-            temp = ptr;
+        struct node *ptr = head;
+        while(ptr->next->next != NULL)
             ptr = ptr->next;
-        }
-        temp->next = NULL;
-        free(ptr);
+        printf("Deleted element is %d\n", ptr->next->data);
+        free(ptr->next);
+        ptr->next = NULL;
     }
 }
 
@@ -86,12 +82,8 @@ void del_pos(int pos){
     struct node *ptr, *temp;
     if(head == NULL)
         printf("List is empty\n");
-    else if(pos == 1){
-        printf("Deleted element is %d\n", head->data);
-        ptr = head;
-        head = head->next;
-        free(ptr);
-    }
+    else if(pos == 1)
+        del_begin();
     else{
         ptr = head;
         for(int i = 1; i < pos; i++){
@@ -101,6 +93,20 @@ void del_pos(int pos){
         temp->next = ptr->next;
         free(ptr);
     }
+}
+
+void search(int x){
+    struct node *temp = start;
+    int pos = 1;
+    while(temp != NULL){
+        if(temp->data == x){
+            printf("%d found at position %d\n", x, pos);
+        }
+        temp = temp->next;
+        pos++;
+    }
+    if(temp == NULL)
+        printf("%d not found in the list\n", x);
 }
 
 void display(){
@@ -119,8 +125,8 @@ void display(){
 
 void main(){
     int c, x, pos;
-    while(1){
-        printf("1. Insert at beginning\n2. Insert at end\n3. Insert at position\n4. Delete at beginning\n5. Delete at end\n6. Delete at position\n7. Display\n8. Exit\n");
+    do{
+        printf("1. Insert at beginning\n2. Insert at end\n3. Insert at position\n4. Delete at beginning\n5. Delete at end\n6. Delete at position\n7.Search\n8. Display\n9. Exit\n");
         printf("Enter your coice: ");
         scanf("%d", &c);
         switch(c){
@@ -153,12 +159,16 @@ void main(){
                 del_pos(pos);
                 break;
             case 7:
+                printf("Enter the element to be inserted: ");
+                scanf("%d", &x);
+                search(x);
+            case 8:
                 display();
                 break;
-            case 8:
+            case 9:
                 exit(0);
             default:
                 printf("Invalid coice\n");
         }
-    }
+    }while(c != 8);
 }
