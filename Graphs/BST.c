@@ -26,7 +26,7 @@ void insert() {
         current = root;
         parent = NULL;
 
-        while(true) {
+        while(1) {
             parent = current;
 
             if(x < parent->data) {
@@ -170,11 +170,63 @@ void delete() {
 
             current->data = successor->data;
 
-            if(parent_successor->left == successor) {
+            if(parent_successor->left == successor)
                 parent_successor->left = successor->right;
-            } else {
-                parent_successor->right = successor->right;
-            }
+            else parent_successor->right = successor->right;
         }
     }
+}
+
+void search() {
+    struct node *current;
+    int x;
+
+    if(root == NULL) {
+        printf("Tree is empty\n");
+        return;
+    } else {
+        printf("Enter the element to be searched: ");
+        scanf("%d", &x);
+
+        current = root;
+
+        while(current != NULL) {
+            if(current->data == x) {
+                printf("Element found\n");
+                return;
+            }
+
+            if(x < current->data) {
+                current = current->left;
+            } else {
+                current = current->right;
+            }
+        }
+
+        printf("Element not found\n");
+    }
+}
+
+int main() {
+    int c;
+    do {
+        printf("1. Insert\n2. Delete\n3. Search\n4. Inorder\n5. Preorder\n6. Postorder\n7. Reverse Inorder\n8. Reverse Preorder\n9. Reverse Postorder\n10. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &c);
+        switch(c) {
+            case 1: insert(); break;
+            case 2: delete(); break;
+            case 3: search(); break;
+            case 4: inorder(root); printf("\n"); break;
+            case 5: preorder(root); printf("\n"); break;
+            case 6: postorder(root); printf("\n"); break;
+            case 7: rev_inorder(root); printf("\n"); break;
+            case 8: rev_preorder(root); printf("\n"); break;
+            case 9: rev_postorder(root); printf("\n"); break;
+            case 10: break;
+            default: printf("Invalid choice\n");
+        }
+     
+    } while(c != 10);    
+    return 0;
 }
