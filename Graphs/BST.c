@@ -71,7 +71,9 @@ void postorder(struct node *ptr) {
 }
 
 void rev_inorder(struct node *ptr) {
-    if(ptr != NULL) {
+    if(ptr == NULL) 
+        printf("Tree is empty\n");
+     else{
         rev_inorder(ptr->right);
         printf("%d ", ptr->data);
         rev_inorder(ptr->left);
@@ -79,7 +81,9 @@ void rev_inorder(struct node *ptr) {
 }
 
 void rev_preorder(struct node *ptr) {
-    if(ptr != NULL) {
+    if(ptr == NULL) 
+        printf("Tree is empty\n");
+    else{
         printf("%d ", ptr->data);
         rev_preorder(ptr->right);
         rev_preorder(ptr->left);
@@ -87,7 +91,9 @@ void rev_preorder(struct node *ptr) {
 }
 
 void rev_postorder(struct node *ptr) {
-    if(ptr != NULL) {
+    if(ptr == NULL) 
+        printf("Tree is empty\n");
+    else{
         rev_postorder(ptr->right);
         rev_postorder(ptr->left);
         printf("%d ", ptr->data);
@@ -169,10 +175,11 @@ void delete() {
             }
 
             current->data = successor->data;
-
+            
             if(parent_successor->left == successor)
                 parent_successor->left = successor->right;
-            else parent_successor->right = successor->right;
+            else
+                parent_successor->right = successor->right;
         }
     }
 }
