@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 struct node {
     int data;
@@ -216,10 +217,14 @@ void search() {
 
 int main() {
     int c;
-    do {
-        printf("1. Insert\n2. Delete\n3. Search\n4. Inorder\n5. Preorder\n6. Postorder\n7. Reverse Inorder\n8. Reverse Preorder\n9. Reverse Postorder\n10. Exit\n");
+    while(1) {
+        printf("\n1. Insert\n2. Delete\n3. Search\n4. Inorder\n5. Preorder\n6. Postorder\n7. Reverse Inorder\n8. Reverse Preorder\n9. Reverse Postorder\n10. Exit\n");
         printf("Enter your choice: ");
-        scanf("%d", &c);
+        if (scanf("%d", &c) != 1) {
+            fflush(stdin); 
+            printf("Invalid input. Please enter a number.\n");
+            continue;
+        }
         switch(c) {
             case 1: insert(); break;
             case 2: delete(); break;
@@ -233,7 +238,6 @@ int main() {
             case 10: break;
             default: printf("Invalid choice\n");
         }
-     
-    } while(c != 10);    
+    }    
     return 0;
 }
