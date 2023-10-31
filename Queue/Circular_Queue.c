@@ -7,33 +7,40 @@ int front=-1;
 void enque()
 {
     if((rear+1)%N==front)
-    	printf("Overflow!!");
+        printf("Overflow!!");
     else if(rear==-1 && front==-1)
-    	rear=front=0;
-    else if(rear=N-1 && front!=0)
-    	rear=0;
+        rear=front=0;
+    else if(rear==N-1 && front!=0)
+        rear=0;
     else
     {
-        printf("Enter the element to add in stack: ");
+        printf("Enter the element to add in queue: ");
         rear=(rear+1)%N;
-		scanf("%d",&queue[rear]);
+        scanf("%d",&queue[rear]);
     }
 }
 
 void deque()
 {
-	if(front==rear)
-	{
-		printf("Underflow!!");
-		rear=front=-1;
-	}
-	else if(front==N-1)
-		front=0;
+    if(front==-1 && rear==-1)
+    {
+        printf("Underflow!!");
+    }
+    else if(front==rear)
+    {
+        printf("Removed element: %d",queue[front]);
+        rear=front=-1;
+    }
+    else if(front==N-1)
+    {
+        printf("Removed element: %d",queue[front]);
+        front=0;
+    }
     else
     {
-		front=(front+1)%N;
         printf("Removed element: %d",queue[front]);
-	}
+        front=(front+1)%N;
+    }
 }
 
 void peek()
