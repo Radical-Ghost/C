@@ -1,36 +1,34 @@
 #include <stdio.h>
 #include <graphics.h>
 
-void drawQuadraticBezierCurve(int x0, int y0, int x1, int y1, int x2, int y2, int x3, int y3) {
+void drawQuadraticBezierCurve(int x[4], int y[4]) {
     int t;
-    float x, y;
+    float xt, yt;
 
     for (t = 0; t <= 1000; t++) {
         float tN = t / 1000.0;
-        x = (1 - tN) * (1 - tN) * (1 - tN) * x0 + 3 * (1 - tN) * (1 - tN) * tN * x1 + 3 * (1 - tN) * tN * tN * x2 + tN * tN * tN * x3;
-        y = (1 - tN) * (1 - tN) * (1 - tN) * y0 + 3 * (1 - tN) * (1 - tN) * tN * y1 + 3 * (1 - tN) * tN * tN * y2 + tN * tN * tN * y3;
-        //tN is a normalised    
-        putpixel(x, y, WHITE);
+        xt = (1 - tN) * (1 - tN) * (1 - tN) * x[0] + 3 * (1 - tN) * (1 - tN) * tN * x[1] + 3 * (1 - tN) * tN * tN * x[2] + tN * tN * tN * x[3];
+        yt = (1 - tN) * (1 - tN) * (1 - tN) * y[0] + 3 * (1 - tN) * (1 - tN) * tN * y[1] + 3 * (1 - tN) * tN * tN * y[2] + tN * tN * tN * y[3];
+        putpixel(xt, yt, WHITE);
     }
+
+    for (int i = 0; i < 4; i++)
+        putpixel(x[i], y[i], YELLOW);
 }
 
 int main() {
     int width = GetSystemMetrics(SM_CXSCREEN), height = GetSystemMetrics(SM_CYSCREEN);
-	initwindow(width, height, (char*)"", -3, -3);
+    initwindow(width, height, (char*)"", -3, -3);
 
-    int x0, y0, x1, y1, x2, y2, x3, y3;
+    int x[4], y[4];
 
     printf("Enter the coordinates of the control points:\n");
-    printf("Point 1 (x0, y0): ");
-    scanf("%d %d", &x0, &y0);
-    printf("Point 2 (x1, y1): ");
-    scanf("%d %d", &x1, &y1);
-    printf("Point 3 (x2, y2): ");
-    scanf("%d %d", &x2, &y2);
-    printf("Point 4 (x3, y3): ");
-    scanf("%d %d", &x3, &y3);
+    for(int i = 0; i < 4; i++) {
+        printf("Point %d (x%d, y%d): ", i+1, i, i);
+        scanf("%d %d", &x[i], &y[i]);
+    }
 
-    drawQuadraticBezierCurve(x0, y0, x1, y1, x2, y2, x3, y3);
+    drawQuadraticBezierCurve(x, y);
 
     delay(5000);
     closegraph();

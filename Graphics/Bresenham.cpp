@@ -10,8 +10,8 @@ void BSH(int x1, int y1, int x2, int y2) {
 	int dy=y2-y1;
 
 	int p= 2*dy-dx;
-	for(int i=0; i<dx; i++) {
-		if(p<0) {
+	for(int i = 0; i < dx; i++) {
+		if(p < 0) {
 			putpixel(x1++,y1,15);
 			p=p+2*dy;
 		}
