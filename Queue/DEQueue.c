@@ -1,115 +1,105 @@
 #include <stdio.h>
-#define size 5
-int deque[size];
-int front=-1,rear=-1;
+#define N 5
+int queue[N];
+int f = -1, r = -1;
 
-void insL(int z){
-    if((front == 0 && rear == size-1) || front == rear + 1)
-        printf("Overflow!!");
-    else if(front == -1 && rear == -1) {
-        rear = front = 0;
-        deque[front] = z;
-    }
-    else if(front == 0) {
-        front = size-1;
-        deque[front] = z;
-    }
-    else 
-        deque[--front]=z;    
-}
+void insF() {
+    if((f == 0 && r == N-1) || f == r + 1)
+        printf("Overflow");
+    else {
+        printf("Enter the element: ");
+        int x;
+        scanf("%d", &x);
 
-void insR(int z){
-    if((front == size && rear == size-1) || front == rear + 1)
-        printf("Overflow!!");
-    else if(front == -1 && rear == -1) {
-        rear = 0;
-        deque[rear] = z;
-    }
-    else if(rear == size-1) {
-        rear = 0;
-        deque[rear] = z;
-    }
-    else 
-        deque[++rear] = z;
-}
-
-void delL(){
-    if(front == -1 && rear == -1)
-        printf("Underflow!!");
-    else if(front == rear) {   
-        printf("The removed element is: %d",deque[front]);
-        front = rear = -1;
-    }
-    else if(front == size-1) {
-        printf("The removed element is: %d",deque[front]);
-        front = 0;
-    }
-    else 
-        printf("The removed element is: %d",deque[front++]);
-}
-
-void delR(){
-    if(front == -1 && rear == -1)
-        printf("Underflow!!");
-    else if(front == rear) {   
-        printf("The removed element is: %d",deque[rear]);
-        front = rear = -1;
-    }
-    else if(rear == 0) {
-        printf("The removed element is: %d",deque[rear]);
-        rear = size-1;
-    }
-    else 
-        printf("The removed element is: %d",deque[rear--]);
-}
-
-void display(){
-    int i = front;
-    printf("\nElements in DEQueue are: ");
-    while(i != rear+1) {
-        printf("\n%d",deque[i]);
-        i++;
-    }
-}
-
-int main(){
-    int n,z;
-    do{
-        printf("\n\n1.Insert Left\n2.Insert Right\n3.Delete Left\n4.Delete right\n5.Display\n6.Exit\n");
-        printf("Enter your choice: ");
-        scanf("%d",&n);
-        switch (n) {
-        case 1:
-            printf("Enter number to be inserted: ");
-            scanf("%d",&z);
-            insL(z);
-            break;
-        
-        case 2:
-            printf("Enter number to be inserted: ");
-            scanf("%d",&z);
-            insR(z);
-            break;
-
-        case 3:
-            delL();
-            break;
-
-        case 4:
-            delR();
-            break;
-
-        case 5:
-            display();
-            break;
-
-        case 6:
-            break;
-
-        default:
-            printf("Invalid input!! Please enter correct value.");
+        if(f == -1 && r == -1) {
+            f = r = 0;
+            queue[f] = x;
         }
-    }while(n!=6);
+        else if(f == 0) {
+            f = N-1;
+            queue[f] = x;
+        }
+        else queue[--f] = x;
+    }
+}
+
+void insR() {
+    if((f == 0 && r == N-1) || f == r + 1)
+        printf("Overflow");
+    else {
+        printf("Enter the element: ");
+        int x;
+        scanf("%d", &x);
     
+         if(f == -1 && r == -1) {
+            f = r = 0;
+            queue[r] = x;
+        }
+        else if(r == N-1) {
+            r = 0;
+            queue[r] = x;
+        }
+        else queue[++r] = x;
+    }
+}
+
+void delF() {
+    if(f == -1 && r == -1)
+        printf("Underflow");
+    else if(f == r) {
+        printf("Deleted element: %d", queue[f]);
+        r = f = -1;
+    }
+    else if(f == N - 1) {
+        printf("Deleted element: %d", queue[f]);
+        f = 0;
+    }
+    else printf("Deleted element: %d", queue[f++]);
+}
+
+void delR() {
+    if(f == -1 && r == -1)
+        printf("Underflow");
+    else if(f == r) {
+        printf("Deleted element: %d", queue[r]);
+        r = f = -1;
+    }
+    else if(r == 0) {
+        printf("Deleted element: %d", queue[r]);
+        r = N - 1;
+    }
+    else printf("Deleted element: %d", queue[r--]);
+}
+
+void display() {
+    if(f == -1 && r == -1)
+        printf("Underflow");
+    else {
+        int i = f;
+        while(1) {
+            printf("%d ", queue[i]);
+            if(i == r)
+                break;
+            i = (i+1)%N;
+        }
+        printf("\n");
+    }
+}
+
+int main() {
+    int c;
+    do {
+        printf("\n1. Insert Front\n2. Insert Rear\n3. Delete Front\n4. Delete Rear\n5. Display\n6. Exit\nEnter your choice: ");
+        scanf("%d", &c);
+        switch(c) {
+            case 1: insF(); break;
+            case 2: insR(); break;
+            case 3: delF(); break;
+            case 4: delR(); break;
+            case 5: display(); break;
+            case 6: break;
+            default: printf("Invalid choice");
+        }
+    }while(c != 6);
     return 0;
 }

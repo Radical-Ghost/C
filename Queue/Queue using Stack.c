@@ -79,7 +79,7 @@ int deque()
         }
     }
 
-    return pop2();
+    printf("Removed Element is: %d", pop2());
 }
 
 int main() 
