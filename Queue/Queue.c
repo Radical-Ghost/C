@@ -11,16 +11,16 @@ void enque()
     else	
     {
         printf("Enter the element to add in stack: ");
-        scanf("%d",&queue[++rear]);
+        scanf("%d", &queue[++rear]);
     }
 }
 
 void deque()
 {
-	if(front>rear)
+	if(front > rear)
         printf("Underflow!!");
     else
-        printf("Removed element: %d",queue[++front]);
+        printf("Removed element: %d", queue[++front]);
 }
 
 void peek()
@@ -28,7 +28,7 @@ void peek()
     if(rear==-1 && front==-1)
 		printf("Underflow!!");
     else
-    	printf("The first element in queue is: %d",queue[front]);
+    	printf("The first element in queue is: %d", queue[front]);
 }
 
 void display()
@@ -37,8 +37,9 @@ void display()
 	if(rear==-1)
 		printf("Underflow!!");
 	else { 
-    for (i=front;i<=rear;i++);
-        printf("%d\n",queue[i]);
+        printf("The elements in queue are: ");
+        for (i=front;i<=rear;i++);
+            printf("%d\n",queue[i]);
 	}
 }
 
