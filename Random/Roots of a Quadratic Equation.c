@@ -9,18 +9,18 @@ int main()
 	printf("Enter the coefficients of the quadratic equation: ");
 	scanf("%d%d%d",&a,&b,&c);
 	
-	d=b*b-4*a*c;
+	d = (b * b) - (4 * a * c);
 	
-	if (d>0)
+	if (d > 0)
 	{
-      r1 = -b+sqrt (d) / (2*a);
-      r2 = -b-sqrt (d) / (2*a);
+      r1 = - b + sqrt(d) / (2 * a);
+      r2 = - b - sqrt(d) / (2 * a);
       printf ("The real roots = %d %d", r1, r2);
    }
    else if (d==0)
    {
-      r1 = -b/(2*a);
-      r2 = -b/(2*a);
+      r1 = - b / (2 * a);
+      r2 = - b / (2 * a);
       printf ("roots are equal =%d %d", r1, r2);
    }
    else

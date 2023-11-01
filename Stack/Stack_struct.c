@@ -38,6 +38,7 @@ int peek()
 {
 	return s.a[s.top];
 }
+
 void display()
 {
 	int i;
