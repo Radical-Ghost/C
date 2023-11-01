@@ -72,9 +72,7 @@ void postorder(struct node *ptr) {
 }
 
 void rev_inorder(struct node *ptr) {
-    if(ptr == NULL) 
-        printf("Tree is empty\n");
-     else{
+    if(ptr != NULL) {
         rev_inorder(ptr->right);
         printf("%d ", ptr->data);
         rev_inorder(ptr->left);
@@ -82,9 +80,7 @@ void rev_inorder(struct node *ptr) {
 }
 
 void rev_preorder(struct node *ptr) {
-    if(ptr == NULL) 
-        printf("Tree is empty\n");
-    else{
+    if(ptr != NULL) {
         printf("%d ", ptr->data);
         rev_preorder(ptr->right);
         rev_preorder(ptr->left);
@@ -92,9 +88,7 @@ void rev_preorder(struct node *ptr) {
 }
 
 void rev_postorder(struct node *ptr) {
-    if(ptr == NULL) 
-        printf("Tree is empty\n");
-    else{
+    if(ptr != NULL) {
         rev_postorder(ptr->right);
         rev_postorder(ptr->left);
         printf("%d ", ptr->data);
@@ -102,85 +96,63 @@ void rev_postorder(struct node *ptr) {
 }
 
 void delete() {
-    struct node *current, *parent;
-    int x;
-
-    if(root == NULL) {
-        printf("Tree is empty\n");
-        return;
-    } else {
-        printf("Enter the element to be deleted: ");
+    if (root == NULL)  
+        printf("Tree is Empty!!");
+    else {
+        int x;
+        struct node *parent, *current;
+        parent = NULL;
+        current = root;
+        
+        printf("Enter the data to be deleted: ");
         scanf("%d", &x);
 
-        current = root;
-        parent = NULL;
-
         while(current != NULL) {
-            if(current->data == x) {
+            if (x == current->data)
                 break;
-            }
-
             parent = current;
-
-            if(x < current->data) {
+            if (x < current->data)
                 current = current->left;
-            } else {
-                current = current->right;
-            }
+            else current = current->right;
         }
 
-        if(current == NULL) {
-            printf("Element not found\n");
-            return;
-        }
-
-        if(current->left == NULL && current->right == NULL) {
-            if(parent == NULL) {
-                root = NULL;
-            } else {
-                if(parent->left == current) {
+        if (current == NULL)
+            printf("Element not found!!");
+        else {
+            if (current->left == NULL && current->right == NULL) {
+                if (parent == NULL)
+                    root = NULL;
+                else if (parent->left == current)
                     parent->left = NULL;
-                } else {
-                    parent->right = NULL;
-                }
-            }
-        } else if(current->left != NULL && current->right == NULL) {
-            if(parent == NULL) {
-                root = current->left;
-            } else {
-                if(parent->left == current) {
+                else parent->right = NULL;
+            } else if (current->left != NULL && current->right == NULL) {
+                if (parent == NULL)
+                    root = current->left;
+                else if (parent->left == current)
                     parent->left = current->left;
-                } else {
-                    parent->right = current->left;
-                }
-            }
-        } else if(current->left == NULL && current->right != NULL) {
-            if(parent == NULL) {
-                root = current->right;
-            } else {
-                if(parent->left == current) {
-                    parent->left = current->right;
-                } else {
-                    parent->right = current->right;
-                }
-            }
-        } else {
-            struct node *successor, *parent_successor;
-
-            successor = current->right;
-            parent_successor = current;
-
-            while(successor->left != NULL) {
-                parent_successor = successor;
-                successor = successor->left;
-            }
-
-            current->data = successor->data;
+                else parent->right = current->left;
             
-            if(parent_successor->left == successor)
-                parent_successor->left = successor->right;
-            else
-                parent_successor->right = successor->right;
+            } else if (current->left == NULL && current->right != NULL) {
+                if (parent == NULL)
+                    root = current->right;
+                else if (parent->left == current)
+                    parent->left = current->right;
+                else parent->right = current->right;
+            } else {
+                struct node *successor, *parent_successor;
+                parent_successor = current;
+                successor = current->right;
+
+                while (successor->left != NULL) {
+                    parent_successor = successor;
+                    successor = successor->left;
+                }
+                current->data = successor->data;
+
+                if (parent_successor->left == successor)
+                    parent_successor->left = successor->right;
+                else parent_successor->right = successor->right;
+            }
         }
     }
 }
@@ -217,7 +189,7 @@ void search() {
 
 int main() {
     int c;
-    while(1) {
+    do {
         printf("\n1. Insert\n2. Delete\n3. Search\n4. Inorder\n5. Preorder\n6. Postorder\n7. Reverse Inorder\n8. Reverse Preorder\n9. Reverse Postorder\n10. Exit\n");
         printf("Enter your choice: ");
         if (scanf("%d", &c) != 1) {
@@ -229,7 +201,7 @@ int main() {
             case 1: insert(); break;
             case 2: delete(); break;
             case 3: search(); break;
-            case 4: inorder(root); printf("\n"); break;
+            case 4: inorder(root); printf("\n"); printf("%d\n", root->data); break;
             case 5: preorder(root); printf("\n"); break;
             case 6: postorder(root); printf("\n"); break;
             case 7: rev_inorder(root); printf("\n"); break;
@@ -238,6 +210,6 @@ int main() {
             case 10: break;
             default: printf("Invalid choice\n");
         }
-    }    
+    }while(c != 10);
     return 0;
 }

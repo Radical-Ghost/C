@@ -2,27 +2,23 @@
 #include <string.h>
 #include <ctype.h>
 
-#define N 5
-int top=-1;
+#define N 500
+int top=-1, i, j = 0;;
 char infix[N];
-char prefix[N];
-char postfix[N];
+char fix[N];
 char stack[N];
 
-void push(char x)
-{
-	if(top!=N-1)
+void push(char x) {
+	if(top != N-1)
     	stack[++top]=x;
 }
 
-char pop()
-{
-    if(top>-1)
+char pop() {
+    if(top > -1)
         return stack[top--];
 }
 
-int prec(char x)
-{
+int prec(char x) {
 	if(x=='^' || x=='$')
 		return 3;
     else if(x=='*' || x=='/')
@@ -32,80 +28,64 @@ int prec(char x)
     else return 0;
 }
 
-void infixtopostfix()
-{
-	int i,j=0;
-    printf("Enter stack Expresion: ");
-    scanf("%s",infix);
-    
-    for(i=0;infix[i];i++)
-    {
-        if(infix[i]=='(')
-        	push(infix[i]);
-			
-        else if(isalnum(infix[i]))
-        	prefix[j++]=infix[i];
+void convert() {
+    for(i = 0; infix[i]; i++) {
+        if(infix[i] == '(')
+            push(infix[i]);
 
-        else if(infix[i]==')')
-        {
+        else if( isalnum(infix[i]) )
+            fix[j++]=infix[i];
+
+        else if(infix[i]==')') {
             while(stack[top]!='(' && top>-1)
-                prefix[j++]=pop();
+                fix[j++]=pop();
             pop();
         }
-        
-        else
-        {
-            while(top>-1 && prec(stack[top])>=prec(infix[i]))
-                prefix[j++]=pop();
+
+        else {
+            while(top>-1 && prec(stack[top]) >= prec(infix[i]))
+                fix[j++] = pop();
             push(infix[i]);
         }
     }
 
     while(top>-1)
-        prefix[j++]=pop();
-		
-    printf("Postfix of the expression is: %s\n\n",prefix);
+        fix[j++]=pop();
 }
 
-void infixtoprefix()
-{
-	int i,j=0;
-    printf("Enter a Expresion: ");
+void infixtopostfix() {
+    printf("Enter an Expresion: ");
+    scanf("%s",infix);
+
+    convert();
+    fix[j]='\0';	
+    printf("Postfix of the expression is: %s\n\n",fix);
+}
+
+void infixtoprefix() {
+    printf("Enter an Expresion: ");
     scanf("%s",infix);
     strrev(infix);
-    
-    for(i=0;infix[i];i++)
-    {
-        if(infix[i]=='(')
-        	push(infix[i]);
-			
-        else if(isalnum(infix[i]))
-        	postfix[j++]=infix[i];
 
-        else if(infix[i]==')')
-        {
-            while(stack[top]!='(' && top>-1)
-                postfix[j++]=pop();
-            pop();
+    //the convert function wont work unless we change the brackets to their opposite since we are reversing the string
+    for(i = 0; infix[i]; i++) {
+        if(infix[i] == '(') {
+            infix[i] = ')';
+            i++;
         }
-        
-        else
-        {
-            while(top>-1 && prec(stack[top])>=prec(infix[i]))
-                postfix[j++]=pop();
-            push(infix[i]);
+        else if(infix[i] == ')') {
+            infix[i] = '(';
+            i++;
         }
     }
 
-    while(top>-1)
-        postfix[j++]=pop();
-	
-	strrev(postfix);
-    printf("Prefix of the expression is: %s\n\n",postfix);
+    convert();
+	strrev(fix);
+    fix[j]='\0';
+    printf("Prefix of the expression is: %s\n\n",fix);
 }
 
-void main()
-{   
+void main() {   
     int c = 0;
     while(c != 3) {
         printf("1. Infix to Prefix\n2. Infix to Postfix\n3.Exit\nEnter your choice: ");

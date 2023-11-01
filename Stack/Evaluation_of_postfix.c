@@ -15,8 +15,8 @@ void push(char x)
 
 char pop()
 {
-    	if(top>-1)
-        	return stack[top--];
+	if(top>-1)
+		return stack[top--];
 }
 
 void oper(int a, int b, char x)
@@ -31,9 +31,9 @@ void oper(int a, int b, char x)
 		push(b-a);
 }
 
-int eval()
-{
-	printf("Enter stack Expresion: ");
+void main()
+{   
+    printf("Enter stack Expresion: ");
     scanf("%s",prefix);
     strrev(prefix);
     
@@ -47,10 +47,5 @@ int eval()
 	}
 	
     printf("The evaluated result is: %d",pop());
-}
-
-void main()
-{   
-    eval();
 }
 

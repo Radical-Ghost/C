@@ -15,6 +15,7 @@ char pop()
     	if(top>-1)
         	return stack[top--];
 }
+
 int match(char a, char b)
 {
 	if(a=='(' && b==')')
@@ -30,28 +31,28 @@ int par()
 {
 	int i;
 	char p;
-    	printf("Enter a Expresion: ");
-    	scanf("%s",infix);
+	printf("Enter a Expresion: ");
+	scanf("%s",infix);
     
-    	for(i=0;infix[i];i++)
-    	{
-        	if(infix[i]=='(' || infix[i]=='[' || infix[i]=='{')
-        	push(infix[i]);
+	for(i=0;infix[i];i++)
+	{
+		if(infix[i]=='(' || infix[i]=='[' || infix[i]=='{')
+		push(infix[i]);
 
-        	else if(infix[i]==')' || infix[i]==']' || infix[i]=='}')
+		else if(infix[i]==')' || infix[i]==']' || infix[i]=='}')
+		{
+			if(top==-1)
 			{
-				if(top==-1)
+				printf("Invalid Parenthesis.");
+				return 0;
+			}
+			else if(!match(pop(),infix[i]))
 				{
 					printf("Invalid Parenthesis.");
 					return 0;
 				}
-				else if(!match(pop(),infix[i]))
-					{
-						printf("Invalid Parenthesis.");
-						return 0;
-					}
-			}    
-    	}
+		}    
+	}
     
 	if(top==-1)
 		printf("Valid Parenthesis.");

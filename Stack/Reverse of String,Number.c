@@ -60,7 +60,7 @@ int revsp()
 	while(n[i])
 		push(n[i++]);
 	
-	i=0;
+
 	while(n[i])
 		if(n[i++]!=pop())
 		{
