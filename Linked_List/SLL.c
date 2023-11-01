@@ -96,21 +96,25 @@ void del_pos(int pos){
     }
 }
 
-void search(int x){
-    if(head == NULL)
+void search() {
+    if (head == NULL) {
         printf("List is empty\n");
-    else{
+        return;
+    } else {
+        int key, i = 1;
         struct node *temp = head;
-        int pos = 1;
-        while(temp != NULL){
-            if(temp->data == x){
-                printf("%d found at position %d\n", x, pos);
+        printf("Enter element to search: ");
+        scanf("%d", &key);
+        do {
+            if (temp->data == key) {
+                printf("Element found at %d\n", i);
+                return;
             }
+            i++;
             temp = temp->next;
-            pos++;
-        }
-        if(temp == NULL)
-            printf("%d not found in the list\n", x);
+        } while (temp != NULL);
+        
+        printf("Element not found\n");
     }
 }
 
