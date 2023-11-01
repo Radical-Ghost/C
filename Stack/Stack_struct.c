@@ -36,14 +36,22 @@ int pop()
 
 int peek()
 {
-	return s.a[s.top];
+	if(s.top==-1)
+		underflow();
+	else printf("Top element = %d\n",s.a[s.top]);
 }
 
 void display()
 {
-	int i;
-	for(i=0;i<=s.top;i++)
-		printf("%d\n",s.a[i]);
+	
+	if(s.top==-1)
+		underflow();
+	else {
+		printf("Stack elements are:\n");
+		int i;
+		for(i=0;i<=s.top;i++)
+			printf("%d\n",s.a[i]);
+	}
 }
 
 int main()
@@ -65,7 +73,7 @@ int main()
 			case 2:	printf("Popped element = %d\n",pop());
 					break;
 					
-			case 3:	printf("Top element = %d\n",peek());
+			case 3:	peek();
 					break;
 					
 			case 4:	display();
