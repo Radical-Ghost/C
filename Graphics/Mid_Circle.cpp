@@ -10,15 +10,15 @@ void Circle(int xc, int yc, int r) {
 
 
 	while(x < y) {
-	putpixel(xc+x, yc+y, 15);
-	putpixel(xc-x, yc+y, 15);
-	putpixel(xc+x, yc-y, 15);
-	putpixel(xc-x, yc-y, 15);
-	putpixel(xc+y, yc+x, 15);
-	putpixel(xc+y, yc-x, 15);
-	putpixel(xc-y, yc+x, 15);
-	putpixel(xc-y, yc-x, 15);
-	delay(100);
+		putpixel(xc+x, yc+y, 15);
+		putpixel(xc-x, yc+y, 15);
+		putpixel(xc+x, yc-y, 15);
+		putpixel(xc-x, yc-y, 15);
+		putpixel(xc+y, yc+x, 15);
+		putpixel(xc+y, yc-x, 15);
+		putpixel(xc-y, yc+x, 15);
+		putpixel(xc-y, yc-x, 15);
+		delay(100);
 
 		if(p < 0) {
 			x++;
@@ -29,7 +29,6 @@ void Circle(int xc, int yc, int r) {
 			y--;
 			p = p + 2*(x-y) + 1;
 		}
-		printf("%d %d\n", x, y);
 	}
 
 	getch();

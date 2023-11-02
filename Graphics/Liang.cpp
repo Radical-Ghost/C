@@ -14,8 +14,9 @@ void liang_barsky() {
     scanf("%lf %lf", &xmax, &ymax);
 
     initwindow(1000, 1000, "Liang-Barsky");
-    rectangle(xmin, ymin, xmax, ymax);
     line(x1, y1, x2, y2);
+    setcolor(RED);
+    rectangle(xmin, ymin, xmax, ymax);
     getch();
     
     double dx = x2 - x1, dy = y2 - y1, r1 = 0, r2 = 1;
@@ -32,6 +33,7 @@ void liang_barsky() {
         double nx1 = x1 + r1 * dx, ny1 = y1 + r1 * dy, nx2 = x1 + r2 * dx, ny2 = y1 + r2 * dy;
         cleardevice();
         rectangle(xmin, ymin, xmax, ymax);
+        setcolor(GREEN);
         line(nx1, ny1, nx2, ny2);
     }
 
