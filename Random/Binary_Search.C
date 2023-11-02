@@ -5,18 +5,18 @@ void insort(int n)
 {
     int i,j,t;
     
-    for(i=1;i<n;i++)
+    for(i=1; i<n; i++)
     {
         t=a[i];
-        for(j=i-1;j>=0 && a[j]>t;j--)
-            a[j+1]=a[j];
-        a[j+1]=t;
+        for(j=i-1; j>=0 && a[j]>t; j--)
+            a[j + 1]=a[j];
+        a[j + 1]=t;
     }   
 }
 
 int binary(int n)
 {
-    int i,p,h=n-1,l=0;
+    int i, p, h=n-1, l=0;
     
     insort(n);
 

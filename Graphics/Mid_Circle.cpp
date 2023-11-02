@@ -1,4 +1,3 @@
-#include<iostream>
 #include<conio.h>
 #include<graphics.h>
 #include<math.h>
@@ -10,7 +9,7 @@ void Circle(int xc, int yc, int r) {
 	initwindow(width, height, (char*)"", -3, -3);
 
 
-	while(x<y) {
+	while(x < y) {
 	putpixel(xc+x, yc+y, 15);
 	putpixel(xc-x, yc+y, 15);
 	putpixel(xc+x, yc-y, 15);
@@ -30,6 +29,7 @@ void Circle(int xc, int yc, int r) {
 			y--;
 			p = p + 2*(x-y) + 1;
 		}
+		printf("%d %d\n", x, y);
 	}
 
 	getch();

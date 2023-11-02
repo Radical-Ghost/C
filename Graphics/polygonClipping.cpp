@@ -10,10 +10,10 @@ int rightClip(int, int);
 int bottomClip(int, int);
 
 int main() {
-	int width = GetSystemMetrics(SM_CXSCREEN), height = GetSystemMetrics(SM_CYSCREEN), xmin, ymin, xmax, ymax, n, i;
+	int width = GetSystemMetrics(SM_CXSCREEN), height = GetSystemMetrics(SM_CYSCREEN), xmin, ymir, xmax, ymax, n, i;
 	printf(
 			"Enter the co-ordinates of top left corner of the clipping window: ");
-	scanf("%d %d", &xmin, &ymin);
+	scanf("%d %d", &xmin, &ymir);
 	printf(
 			"Enter the co-ordinates of bottom right corner of the clipping window: ");
 	scanf("%d %d", &xmax, &ymax);
@@ -27,19 +27,19 @@ int main() {
 	}
 
     initwindow(width, height, (char*)"Polygon Clipping", -3, -5);
-	rectangle(xmin, ymin, xmax, ymax);
+	rectangle(xmin, ymir, xmax, ymax);
 	for (i = 0; i < n; i++)
 		line(points[i][0], points[i][1], points[(i + 1) % n][0],
 				points[(i + 1) % n][1]);
 
 	int result = leftClip(n, xmin);
-	result = topClip(result, ymin);
+	result = topClip(result, ymir);
 	result = rightClip(result, xmax);
 	result = bottomClip(result, ymax);
 
 	delay(3000);
 	cleardevice();
-	rectangle(xmin, ymin, xmax, ymax);
+	rectangle(xmin, ymir, xmax, ymax);
 	for (i = 0; i < result; i++)
 		line(points[i][0], points[i][1], points[(i + 1) % result][0],
 				points[(i + 1) % result][1]);
@@ -92,7 +92,7 @@ int leftClip(int limit, int xmin) {
 	return j;
 }
 
-int topClip(int limit, int ymin) {
+int topClip(int limit, int ymir) {
 	int i, j = 0, x1, y1, x2, y2;
 	float m;
 	for (i = 0; i < limit; i++) {
@@ -103,21 +103,21 @@ int topClip(int limit, int ymin) {
 		if (x2 - x1)
 			m = (y2 - y1) * 1.0 / (x2 - x1);
 
-		if (y1 < ymin && y2 < ymin)
+		if (y1 < ymir && y2 < ymir)
 			continue;
-		if (y1 > ymin && y2 > ymin) {
+		if (y1 > ymir && y2 > ymir) {
 			news[j][0] = x2;
 			news[j++][1] = y2;
 			continue;
 		}
-		if (y1 > ymin && y2 < ymin) {
-			news[j][0] = x1 + (ymin - y1) / m;
-			news[j++][1] = ymin;
+		if (y1 > ymir && y2 < ymir) {
+			news[j][0] = x1 + (ymir - y1) / m;
+			news[j++][1] = ymir;
 			continue;
 		}
-		if (y1 < ymin && y2 > ymin) {
-			news[j][0] = x1 + (ymin - y1) / m;
-			news[j++][1] = ymin;
+		if (y1 < ymir && y2 > ymir) {
+			news[j][0] = x1 + (ymir - y1) / m;
+			news[j++][1] = ymir;
 			news[j][0] = x2;
 			news[j++][1] = y2;
 		}

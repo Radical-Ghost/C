@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <graphics.h>
 
-void drawQuadraticBezierCurve(int x[4], int y[4]) {
+void drawCubicBezierCurve(int x[4], int y[4]) {
     int t;
     float xt, yt;
 
@@ -28,7 +28,7 @@ int main() {
         scanf("%d %d", &x[i], &y[i]);
     }
 
-    drawQuadraticBezierCurve(x, y);
+    drawCubicBezierCurve(x, y);
 
     delay(5000);
     closegraph();
