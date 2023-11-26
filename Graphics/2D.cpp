@@ -67,6 +67,38 @@ void rotation() {
     drawTriangle(x[0], y[0], x[1], y[1], x[2], y[2]);
 }
 
+void arbitrary_rotation() {
+    double x, y, x_pivot, y_pivot;
+    int angle;
+    printf("Enter the point to be rotated (x y): ");
+    scanf("%lf %lf", &x, &y);
+    printf("Enter the pivot point (x y): ");
+    scanf("%lf %lf", &x_pivot, &y_pivot);
+    printf("Enter the angle of rotation (in degrees): ");
+    scanf("%d", &angle);
+
+    // Convert the angle from degrees to radians
+    double angleRad = angle * M_PI / 180.0;
+
+    // Translate the point to the origin
+    x -= x_pivot;
+    y -= y_pivot;
+
+    // Rotate the point using the rotation matrix
+    double rotated_x = x * cos(angleRad) - y * sin(angleRad);
+    double rotated_y = x * sin(angleRad) + y * cos(angleRad);
+
+    // Translate the point back
+    rotated_x += x_pivot;
+    rotated_y += y_pivot;
+
+    // Draw the original and rotated points
+    putpixel(x + x_pivot, y + y_pivot, WHITE);
+    putpixel(rotated_x, rotated_y, RED);
+
+    printf("Point (%.2lf, %.2lf) rotated by %d degrees around point (%.2lf, %.2lf) is at (%.2lf, %.2lf)\n", x, y, angle, x_pivot, y_pivot, rotated_x, rotated_y);
+}
+
 int main() {
 	int c = 0;
 	int height = GetSystemMetrics(SM_CYSCREEN), width = GetSystemMetrics(SM_CXSCREEN);
@@ -91,7 +123,11 @@ int main() {
 			
 			case 4:
 				exit(0);
-			
+
+			case 5:
+			arbitrary_rotation();
+			break;	
+				
 			default:
 				printf("Invalid choice\n");
 		}

@@ -3,12 +3,9 @@
 int stack[N];
 int top=-1;
 
-void push()
-{
+void push(){
     if(top==N-1)
-    {
         printf("Overflow!!");
-    }  
     else
     {
         printf("Enter the element to add in stack: ");
@@ -16,43 +13,32 @@ void push()
     }
 }
 
-void pop()
-{
+void pop(){
     if(top==-1)
         printf("Underflow!!");
     else
-    {
         printf("Popped element: %d",stack[top--]);
-    }
 }
 
-void peek()
-{
+void peek(){
     if(top==-1)
         printf("Underflow!!");
     else
-    {
         printf("The top element: %d",stack[top]);
-    }
 }
 
-void display()
-{
-	int i;
-    for (i=top;i>=0;i--);
+void display(){
+    for (int i=top; i>=0; i--)
         printf("%d\n",stack[i]);
 }
 
-void main()
-{
+void main(){
     int x,z;
-    do
-    {
+    do{
         printf("1.Push\n2.Pop\n3.Peek\n4.Display\n\n");
         printf("Enter your choice: ");
         scanf("%d",&x);
-        switch (x)
-        {
+        switch (x){
             case 1: push();
                     break;
             case 2: pop();  

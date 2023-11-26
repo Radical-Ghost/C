@@ -3,7 +3,7 @@
 #include <ctype.h>
 
 #define N 500
-int top=-1, i, j = 0;;
+int top=-1, i, j = 0;
 char infix[N];
 char fix[N];
 char stack[N];
