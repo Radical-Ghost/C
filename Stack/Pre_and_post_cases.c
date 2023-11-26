@@ -2,7 +2,7 @@
 #include <string.h>
 #include <ctype.h>
 
-#define N 500
+#define N 50
 int top=-1, i, j = 0;
 char infix[N];
 char fix[N];
@@ -37,13 +37,13 @@ void convert() {
             fix[j++]=infix[i];
 
         else if(infix[i]==')') {
-            while(stack[top]!='(' && top>-1)
+            while(stack[top] != '(' && top > -1)
                 fix[j++]=pop();
             pop();
         }
 
         else {
-            while(top>-1 && prec(stack[top]) >= prec(infix[i]))
+            while(top > -1 && prec(stack[top]) >= prec(infix[i]))
                 fix[j++] = pop();
             push(infix[i]);
         }
@@ -69,14 +69,10 @@ void infixtoprefix() {
 
     //the convert function wont work unless we change the brackets to their opposite since we are reversing the string
     for(i = 0; infix[i]; i++) {
-        if(infix[i] == '(') {
+        if(infix[i] == '(')
             infix[i] = ')';
-            i++;
-        }
-        else if(infix[i] == ')') {
+        else if(infix[i] == ')')
             infix[i] = '(';
-            i++;
-        }
     }
 
     convert();

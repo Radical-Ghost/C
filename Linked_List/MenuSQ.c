@@ -25,11 +25,11 @@ void enque(int x){
 }
 
 void deque(){
-    struct node *ptr;
-    ptr = front;
     if(front == NULL)
         printf("Queue is empty\n");
     else{
+        struct node *ptr;
+        ptr = front;
         printf("Deleted element is: %d\n", front->data);
         front = front->next;
         free(ptr);
@@ -37,11 +37,11 @@ void deque(){
 }
 
 void Qdisplay(){
-    struct node *ptr;
-    ptr = front;
     if(front == NULL)
         printf("Queue is empty\n");
     else{
+        struct node *ptr;
+        ptr = front;
         printf("Queue elements are: ");
         while(ptr != NULL){
             printf("%d ", ptr->data);
@@ -61,11 +61,11 @@ void push(int x){
 }
 
 void pop(){
-    struct node *ptr;
     if(top == NULL){
         printf("Stack is empty\n");
     }
     else{
+        struct node *ptr;
         ptr = top;
         printf("Popped Element is : %d\n", ptr->data);
         top = top->next;

@@ -20,7 +20,7 @@ void insert() {
     ptr->data = x;
     ptr->left = NULL;
     ptr->right = NULL;
-
+x
     if(root == NULL) {
         root = ptr;
     } else {
