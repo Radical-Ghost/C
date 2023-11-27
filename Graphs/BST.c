@@ -187,10 +187,39 @@ void search() {
     }
 }
 
+int height(struct node *ptr) {
+    if(ptr == NULL)
+        return 0;
+    else {
+        int lheight = height(ptr->left);
+        int rheight = height(ptr->right);
+        if(lheight > rheight)
+            return (lheight + 1);
+        else return (rheight + 1);
+    }
+}
+
+int totalnodes(struct node *ptr) {
+    if(ptr == NULL)
+        return 0;
+    else return (totalnodes(ptr->left) + totalnodes(ptr->right) + 1);
+}
+
+int mirror(struct node *ptr) {
+    if(ptr != NULL) {
+        struct node *temp;
+        mirror(ptr->left);
+        mirror(ptr->right);
+        temp = ptr->left;
+        ptr->left = ptr->right;
+        ptr->right = temp;
+    }    
+}
+
 int main() {
     int c;
     do {
-        printf("\n1. Insert\n2. Delete\n3. Search\n4. Inorder\n5. Preorder\n6. Postorder\n7. Reverse Inorder\n8. Reverse Preorder\n9. Reverse Postorder\n10. Exit\n");
+        printf("\n1. Insert\n2. Delete\n3. Search\n4. Inorder\n5. Preorder\n6. Postorder\n7. Reverse Inorder\n8. Reverse Preorder\n9. Reverse Postorder\n10. Total number of nodes\n11. Height of the tree\n12. Mirror Tree\n13. Exit\n");
         printf("Enter your choice: ");
         if (scanf("%d", &c) != 1) {
             fflush(stdin); 
@@ -207,9 +236,12 @@ int main() {
             case 7: rev_inorder(root); printf("\n"); break;
             case 8: rev_preorder(root); printf("\n"); break;
             case 9: rev_postorder(root); printf("\n"); break;
-            case 10: break;
+            case 10: printf("Total Nodes are: %d", totalnodes(root)); break;
+            case 11: printf("Height of the Tree is: %d", height(root)); break;
+            case 12: mirror(root); printf("Mirrored Tree is: "); inorder(root); break;
+            case 13: exit(0);
             default: printf("Invalid choice\n");
         }
-    }while(c != 10);
+    }while(c != 13);
     return 0;
 }
