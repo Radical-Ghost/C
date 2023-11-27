@@ -49,7 +49,7 @@ void display() {
         printf("Underflow!!");
     else { 
         printf("The elements in queue are: ");
-        for (i = front; i <= rear; i++)
+        for (i = front; i <= rear; i = (i+1)%N)
             printf("%d ",queue[i]);
     }
 }

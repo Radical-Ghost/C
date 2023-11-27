@@ -5,12 +5,12 @@ void insort(int n)
 {
     int i,j,t;
     
-    for(i=1; i<n; i++)
+    for(i = 1; i < n; i++)
     {
-        t=a[i];
-        for(j=i-1; j>=0 && a[j]>t; j--)
-            a[j + 1]=a[j];
-        a[j + 1]=t;
+        t = a[i];
+        for(j = i-1; j >= 0 && a[j] > t; j--)
+            a[j + 1] = a[j];
+        a[j + 1] = t;
     }   
 }
 
