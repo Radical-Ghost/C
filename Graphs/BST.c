@@ -100,9 +100,7 @@ void delete() {
         printf("Tree is Empty!!");
     else {
         int x;
-        struct node *parent, *current;
-        parent = NULL;
-        current = root;
+        struct node *parent = NULL, *current = root; 
         
         printf("Enter the data to be deleted: ");
         scanf("%d", &x);
@@ -176,11 +174,9 @@ void search() {
                 return;
             }
 
-            if(x < current->data) {
+            if(x < current->data) 
                 current = current->left;
-            } else {
-                current = current->right;
-            }
+            else current = current->right;
         }
 
         printf("Element not found\n");
