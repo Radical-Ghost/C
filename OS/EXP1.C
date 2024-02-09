@@ -1,0 +1,74 @@
+#include <stdio.h>
+
+typedef struct {
+    int id;
+    int burst_time;
+    int arrival_time;
+} Process;
+
+void bubbleSort(Process p[], int n) {
+    int i, j;
+    for (i = 0; i < n-1; i++) {
+        for (j = 0; j < n-i-1; j++) {
+            if (p[j].arrival_time > p[j+1].arrival_time) {
+                Process temp = p[j];
+                p[j] = p[j+1];
+                p[j+1] = temp;
+            }
+        }
+    }
+}
+
+int main() {
+    int n, i, t = 0;
+    printf("Enter number of processes: ");
+    scanf("%d", &n);
+
+    Process p[n];
+    int wt[n], tat[n];
+    printf("Enter burst time and access of processes: \n");
+    for(i=0; i<n; i++){
+        printf("P%d: ", i+1);
+        scanf("%d %d", &p[i].burst_time, &p[i].arrival_time);
+        p[i].id = i+1;
+    }
+
+    bubbleSort(p, n);
+
+    wt[0] = 0;
+    for(i=1; i<n; i++) {
+        wt[i] = wt[i-1] + p[i-1].burst_time;
+        if(wt[i] < p[i].arrival_time)
+            wt[i] = p[i].arrival_time;
+    }
+
+    for(i=0; i<n; i++){
+        t += p[i].burst_time;
+        tat[i] = t - p[i].arrival_time;
+    }
+
+    //table
+    for(i=0; i<16*n+1; i++)
+        printf("-");
+    printf("\n");
+    for(i=0; i<n; i++)
+        printf("|\tP%d\t", p[i].id);
+    printf("|\n");
+    for(i=0; i<16*n+1; i++)
+        printf("-");
+    printf("\n");
+    for(i=0; i<n; i++)
+        printf("%d\t\t", wt[i]);
+    printf("%d\n", wt[n-1]+p[n-1].burst_time);
+
+    int avg_wt=0, avg_tat=0;
+    for(i=0; i<n; i++){
+        avg_wt += wt[i];
+        avg_tat += tat[i];
+    }
+
+    printf("Average waiting time: %f\n", (float)avg_wt/n);
+    printf("Average turn around time: %f\n", (float)avg_tat/n);
+
+    return 0;
+}
