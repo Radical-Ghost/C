@@ -4,13 +4,16 @@ typedef struct {
     int id;
     int burst_time;
     int arrival_time;
+    int priority;
 } Process;
 
-void bubbleSort(Process p[], int n) {
+void bubbleSort(Process p[], int n, int key) {
     int i, j;
     for (i = 0; i < n-1; i++) {
         for (j = 0; j < n-i-1; j++) {
-            if (p[j].arrival_time > p[j+1].arrival_time) {
+            if ((key == 1 && p[j].burst_time > p[j+1].burst_time) || 
+                (key == 2 && p[j].arrival_time > p[j+1].arrival_time) ||
+                (key == 1 && p[j].priority > p[j+1].priority)) {
                 Process temp = p[j];
                 p[j] = p[j+1];
                 p[j+1] = temp;
@@ -25,26 +28,23 @@ int main() {
     scanf("%d", &n);
 
     Process p[n];
-    int wt[n], tat[n];
-    printf("Enter burst time and access of processes: \n");
+    int wt[n], tat[n], ft[n+1];
+    printf("Enter burst time, access time and priority of processes: \n");
     for(i=0; i<n; i++){
         printf("P%d: ", i+1);
-        scanf("%d %d", &p[i].burst_time, &p[i].arrival_time);
+        scanf("%d %d %d", &p[i].burst_time, &p[i].arrival_time, &p[i].priority);
         p[i].id = i+1;
     }
 
-    bubbleSort(p, n);
+    bubbleSort(p, n, 3);
+    bubbleSort(p, n, 1);
+    bubbleSort(p, n, 2);
 
-    wt[0] = 0;
-    for(i=1; i<n; i++) {
-        wt[i] = wt[i-1] + p[i-1].burst_time;
-        if(wt[i] < p[i].arrival_time)
-            wt[i] = p[i].arrival_time;
-    }
-
-    for(i=0; i<n; i++){
-        t += p[i].burst_time;
-        tat[i] = t - p[i].arrival_time;
+    ft[0] = 0;
+    for(i=1; i<=n; i++){
+        ft[i] = ft[i-1] + p[i-1].burst_time;
+        tat[i-1] = ft[i] - p[i-1].arrival_time;
+        wt[i-1] = tat[i-1] - p[i-1].burst_time;
     }
 
     //table
@@ -58,8 +58,8 @@ int main() {
         printf("-");
     printf("\n");
     for(i=0; i<n; i++)
-        printf("%d\t\t", wt[i]);
-    printf("%d\n", wt[n-1]+p[n-1].burst_time);
+        printf("%d\t\t", ft[i]);
+    printf("%d\n", ft[n]);
 
     int avg_wt=0, avg_tat=0;
     for(i=0; i<n; i++){
