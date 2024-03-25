@@ -38,11 +38,11 @@ void gantt_chart(){
 }
 
 void roundRobin(int temp, Process p[], int n, int quantum) {
-    int i, time = 0;
+    int i, time = 0, TAT = 0, WT = 0;
     ins(time);
     temp /= 2;
     
-    for(i=0; i<17*temp; i++)
+    for(i=0; i<18*temp; i++)
         printf("-");
     printf("\n|");
 
@@ -60,7 +60,8 @@ void roundRobin(int temp, Process p[], int n, int quantum) {
                 } else {
                     printf("\tP%d\t|", p[i].id);
                     time = time + p[i].remaining_time;
-                    int waiting_time = time - p[i].burst_time;
+                    TAT += time;
+                    WT += time - p[i].burst_time;
                     p[i].remaining_time = 0;
                     ins(time);
                 }
@@ -77,7 +78,8 @@ void roundRobin(int temp, Process p[], int n, int quantum) {
 
     gantt_chart();
 
-    
+    printf("\nAverage turnaround time: %d\n", TAT/n);
+    printf("Average waiting time: %d\n", WT/n);
 }
 
 int main() {
