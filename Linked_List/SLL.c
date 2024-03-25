@@ -22,7 +22,7 @@ void ins_end(int x){
     ptr->data = x;
     ptr->next = NULL;
     if(head == NULL)
-        ptr = head;
+        head = ptr;
     else{
         temp = head;
         while(temp->next != NULL)
