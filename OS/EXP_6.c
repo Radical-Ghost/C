@@ -6,7 +6,6 @@ struct node{
     struct node *next;
 };
 struct node *head = NULL;
-
 typedef struct {
     int id;
     int burst_time;
