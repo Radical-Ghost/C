@@ -34,34 +34,35 @@ void print_final_table(int n, int dist[], int prev[]) {
         printf("----------------");
 }
 
-void dijkstra(int n, int G[n][n], int start_node) {
-    int dist[n], prev[n], visited[n], i, v;
+void bellman_ford(int n, int G[n][n], int start_node) {
+    int dist[n], prev[n], i, j, k;
 
     for (i = 0; i < n; i++) {
         dist[i] = inf;
         prev[i] = -1;
-        visited[i] = 0;
     }
 
     dist[start_node] = 0;
 
     for (i = 0; i < n - 1; i++) {
-        int min = inf, min_index;
-
-        for (v = 0; v < n; v++)
-            if (visited[v] == 0 && dist[v] <= min)
-                min = dist[v], min_index = v;
-
-        int u = min_index;
-
-        visited[u] = 1;
-
-        for (int v = 0; v < n; v++)
-            if (!visited[v] && G[u][v] && dist[u] != inf &&
-                dist[u] + G[u][v] < dist[v]) {
-                dist[v] = dist[u] + G[u][v];
-                prev[v] = u + 1;
+        for (j = 0; j < n; j++) {
+            for (k = 0; k < n; k++) {
+                if (G[j][k] && dist[j] != inf && dist[j] + G[j][k] < dist[k]) {
+                    dist[k] = dist[j] + G[j][k];
+                    prev[k] = j + 1;
+                }
             }
+        }
+    }
+
+    // Check for negative weight cycles
+    for (j = 0; j < n; j++) {
+        for (k = 0; k < n; k++) {
+            if (G[j][k] != 0 && dist[j] != inf && dist[j] + G[j][k] < dist[k]) {
+                printf("Graph contains a negative-weight cycle\n");
+                return;
+            }
+        }
     }
 
     print_final_table(n, dist, prev);
@@ -83,7 +84,7 @@ int main() {
     printf("Enter the starting node: ");
     scanf("%d", &start_node);
 
-    dijkstra(n, G, start_node - 1);
+    bellman_ford(n, G, start_node - 1);
 
     return 0;
 }
