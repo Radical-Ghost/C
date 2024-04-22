@@ -8,7 +8,7 @@ typedef struct {
 } Item;
 
 void sort(Item items[], int n) {
-    for (int i = 0; i < n - 1; i++) {
+    for (int i = 1; i < n - 1; i++) {
         for (int j = 0; j < n - i - 1; j++) {
             if (items[j].ratio < items[j + 1].ratio) {
                 Item temp = items[j];
@@ -54,15 +54,17 @@ int main() {
     int n, capacity;
     printf("Enter the number of items: ");
     scanf("%d", &n);
+
     Item items[n];
     for (int i = 0; i < n; i++) {
         printf("Enter weight and profit for item %d: ", i+1);
         scanf("%d%d", &items[i].weight, &items[i].profit);
         items[i].no = i+1;
     }
+    
     printf("Enter the capacity of the knapsack: ");
     scanf("%d", &capacity);
 
-    printf("\nMaximum profit: %f\n", fractionalKnapsack(capacity, items, n));
+    printf("\nMaximum profit: %f, for the given Capacity: %d", fractionalKnapsack(capacity, items, n), capacity);
     return 0;
 }
