@@ -8,14 +8,14 @@ typedef struct {
 } Item;
 
 void sort(Item items[], int n) {
-    for (int i = 1; i < n - 1; i++) {
-        for (int j = 0; j < n - i - 1; j++) {
-            if (items[j].ratio < items[j + 1].ratio) {
-                Item temp = items[j];
-                items[j] = items[j + 1];
-                items[j + 1] = temp;
-            }
+    for(int i = 0; i < n; i++) {
+        Item key = items[i];
+        int j = i - 1;
+        while (j >= 0 && items[j].ratio < key.ratio) {
+            items[j+1] = items[j];
+            j--;
         }
+        items[j+1] = key;
     }
 }
 
@@ -41,8 +41,7 @@ float fractionalKnapsack(int capacity, Item items[], int n) {
             curWeight += items[i].weight;
             finalProfit += items[i].profit;
         } else {
-            int remain = capacity - curWeight;
-            finalProfit += items[i].profit * ((float) remain / items[i].weight);
+            finalProfit += items[i].profit * ((float) (capacity - curWeight) / items[i].weight);
             break;
         }
     }
