@@ -1,10 +1,8 @@
 #include <stdio.h>
 
 void sos(int arr[], int n, int data[], int index, int i, int sum) {
-    int j;
-
     if (sum == 0) {
-        for (j = 0; j < index; j++)
+        for (int j = 0; j < index; j++)
             printf("%d ", data[j]);
         printf("\n");
         return;

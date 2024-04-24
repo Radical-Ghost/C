@@ -49,13 +49,13 @@ void dijkstra(int n, int G[n][n], int start_node) {
         int min = inf, min_index;
 
         for (v = 0; v < n; v++)
-            if (visited[v] == 0 && dist[v] <= min)
+            if (!visited[v] && dist[v] <= min)
                 min = dist[v], min_index = v;
 
         int u = min_index;
         visited[u] = 1;
 
-        for (int v = 0; v < n; v++)
+        for (v = 0; v < n; v++)
             if (!visited[v] && G[u][v] && dist[u] != inf &&
                 dist[u] + G[u][v] < dist[v]) {
                 dist[v] = dist[u] + G[u][v];

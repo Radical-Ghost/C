@@ -8,8 +8,7 @@ typedef struct {
 int max(int a, int b) { return (a > b) ? a : b; }
 
 int knapSack(int W, Item items[], int n, int included[]) {
-    int i, j;
-    int v[n + 1][W + 1];
+    int i, j, v[n + 1][W + 1];
 
     for (i = 0; i <= n; i++) {
         for (j = 0; j <= W; j++) {
@@ -27,10 +26,9 @@ int knapSack(int W, Item items[], int n, int included[]) {
     for (i = n; i > 0 && j > 0; i--) {
         if (v[i][j] != v[i - 1][j]) {
             included[i - 1] = 1;
-            j = j - items[i - 1].weight;
-        } else {
+            j -= items[i - 1].weight;
+        } else
             included[i - 1] = 0;
-        }
     }
 
     return v[n][W];

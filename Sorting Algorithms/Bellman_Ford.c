@@ -1,7 +1,6 @@
 #include <stdio.h>
 
 #define inf 9999
-#define max 10
 
 void print_final_table(int n, int dist[], int prev[]) {
     int i;

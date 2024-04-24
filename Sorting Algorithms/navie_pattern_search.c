@@ -4,10 +4,10 @@
 int pattern_match(char *txt, char *pat) {
     int i, j;
     for (i = 0; txt[i] != '\0'; i++) {
-        for (j = 0; pat[j] != '\0'; j++) {
+        for (j = 0; pat[j] != '\0'; j++)
             if (txt[i + j] != pat[j])
                 break;
-        }
+
         if (pat[j] == '\0')
             return i;
     }
