@@ -6,7 +6,7 @@
 
 int rabinKarp(char str[], char pattern[]) {
     int n = strlen(str), m = strlen(pattern), i, j;
-    int p_hash = 0, s_hash = 0, pow = pow(10, m - 1);
+    int p_hash = 0, s_hash = 0, power = pow(10, m - 1);
 
     for (i = 0; i < m; i++) {
         s_hash = s_hash * 10 + (str[i] - 'a' + 1);
@@ -18,7 +18,7 @@ int rabinKarp(char str[], char pattern[]) {
             return 1;
 
         if (i < n - m)
-            s_hash = (s_hash - ((str[i] - 'a' + 1) * pow)) * 10 +
+            s_hash = (s_hash - ((str[i] - 'a' + 1) * power)) * 10 +
                      (str[i + m] - 'a' + 1);
     }
 
