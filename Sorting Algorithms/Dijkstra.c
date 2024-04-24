@@ -53,7 +53,6 @@ void dijkstra(int n, int G[n][n], int start_node) {
                 min = dist[v], min_index = v;
 
         int u = min_index;
-
         visited[u] = 1;
 
         for (int v = 0; v < n; v++)
