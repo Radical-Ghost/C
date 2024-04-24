@@ -1,54 +1,59 @@
 #include <stdio.h>
 #include <string.h>
-#define max 30
+#define MAX 30
 
-void KMP(char *txt, char *pat) {
-    int lps[max], i = 0, j = 0;
-    int n = strlen(txt), m = strlen(pat);
-
-    // Compute LPS array
-    int len = 0;
+void computeLPSArray(char *pat, int M, int *lps) {
+    int length = 0;
     lps[0] = 0;
-    while(i < m) {
-        if(pat[i] == pat[len]) {
-            lps[i] = ++len;
+    int i = 1;
+    while (i < M) {
+        if (pat[i] == pat[length]) {
+            length++;
+            lps[i] = length;
             i++;
         } else {
-            if(len != 0) 
-                len = lps[len - 1];
-            else {
+            if (length != 0) {
+                length = lps[length - 1];
+            } else {
                 lps[i] = 0;
                 i++;
             }
         }
     }
+}
 
-    // KMP algorithm
-    i = j = 0;
-    while(i < n) {
-        if(pat[j] == txt[i]) {
-            i++; 
+void KMP(char *txt, char *pat) {
+    int M = strlen(pat);
+    int N = strlen(txt);
+    int lps[MAX];
+    computeLPSArray(pat, M, lps);
+    int i = 0;
+    int j = 0;
+    while (i < N) {
+        if (pat[j] == txt[i]) {
             j++;
+            i++;
         }
-        if(j == m) {
+        if (j == M) {
             printf("Pattern found at index %d\n", i - j + 1);
             j = lps[j - 1];
-        } else if(i < n && pat[j] != txt[i]) {
-            if(j != 0) 
+        } else if (i < N && pat[j] != txt[i]) {
+            if (j != 0)
                 j = lps[j - 1];
-            else 
-                i++;
+            else
+                i = i + 1;
         }
     }
 }
 
 int main() {
-    char txt[max], pat[max];
+    char txt[MAX], pat[MAX];
     printf("Enter the text: ");
-    gets(txt);
+    fgets(txt, MAX, stdin);
+    txt[strcspn(txt, "\n")] = 0;
     printf("Enter the pattern: ");
-    gets(pat);
-
+    fgets(pat, MAX, stdin);
+    pat[strcspn(pat, "\n")] = 0;
     KMP(txt, pat);
     return 0;
 }

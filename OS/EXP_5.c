@@ -7,18 +7,17 @@ typedef struct {
     int priority;
 } Process;
 
-void bubbleSort(Process p[], int n, int key) {
-    int i, j;
-    for (i = 0; i < n - 1; i++) {
-        for (j = 0; j < n - i - 1; j++) {
-            if ((key == 1 && p[j].burst_time > p[j + 1].burst_time) ||
-                (key == 2 && p[j].arrival_time > p[j + 1].arrival_time) ||
-                (key == 1 && p[j].priority > p[j + 1].priority)) {
-                Process temp = p[j];
-                p[j] = p[j + 1];
-                p[j + 1] = temp;
-            }
+void Sort(Process p[], int n, int c) {
+    for (int i = 0; i < n; i++) {
+        Process key = p[i];
+        int j = i - 1;
+        while ((c == 1 && j >= 0 && p[j].burst_time > key.burst_time) ||
+               (c == 2 && j >= 0 && p[j].arrival_time > key.arrival_time) ||
+               (c == 3 && j >= 0 && p[j].priority > key.priority)) {
+            p[j + 1] = p[j];
+            j--;
         }
+        p[j + 1] = key;
     }
 }
 
@@ -36,9 +35,9 @@ int main() {
         p[i].id = i + 1;
     }
 
-    bubbleSort(p, n, 3);
-    bubbleSort(p, n, 1);
-    bubbleSort(p, n, 2);
+    Sort(p, n, 3);
+    Sort(p, n, 1);
+    Sort(p, n, 2);
 
     ft[0] = 0;
     for (i = 1; i <= n; i++) {

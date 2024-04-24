@@ -6,16 +6,15 @@ typedef struct {
     int arrival_time;
 } Process;
 
-void bubbleSort(Process p[], int n) {
-    int i, j;
-    for (i = 0; i < n - 1; i++) {
-        for (j = 0; j < n - i - 1; j++) {
-            if (p[j].arrival_time > p[j + 1].arrival_time) {
-                Process temp = p[j];
-                p[j] = p[j + 1];
-                p[j + 1] = temp;
-            }
+void Sort(Process p[], int n) {
+    for (int i = 0; i < n; i++) {
+        Process key = p[i];
+        int j = i - 1;
+        while (j >= 0 && p[j].arrival_time > key.arrival_time) {
+            p[j + 1] = p[j];
+            j--;
         }
+        p[j + 1] = key;
     }
 }
 
@@ -26,14 +25,14 @@ int main() {
 
     Process p[n];
     int wt[n], tat[n], ft[n + 1];
-    printf("Enter burst time and access of processes: \n");
+    printf("Enter burst time and arrival time of processes: \n");
     for (i = 0; i < n; i++) {
         printf("P%d: ", i + 1);
         scanf("%d %d", &p[i].burst_time, &p[i].arrival_time);
         p[i].id = i + 1;
     }
 
-    bubbleSort(p, n);
+    Sort(p, n);
 
     ft[0] = 0;
     for (i = 1; i <= n; i++) {
@@ -43,14 +42,16 @@ int main() {
     }
 
     // table
-    for (i = 0; i < 16 * n + 1; i++)
-        printf("-");
+    printf("-");
+    for (i = 0; i < n; i++)
+        printf("----------------");
     printf("\n");
     for (i = 0; i < n; i++)
         printf("|\tP%d\t", p[i].id);
     printf("|\n");
-    for (i = 0; i < 16 * n + 1; i++)
-        printf("-");
+    printf("-");
+    for (i = 0; i < n; i++)
+        printf("----------------");
     printf("\n");
     for (i = 0; i < n; i++)
         printf("%d\t\t", ft[i]);
