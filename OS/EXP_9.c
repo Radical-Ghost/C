@@ -1,11 +1,21 @@
 #include <stdio.h>
 
+void print_table(int processSizes[], int allocation[], int n) {
+    printf("\nProcess No.\tProcess Size\tBlock no.\n");
+    for (int i = 0; i < n; i++) {
+        printf("%d\t\t%d\t\t", i + 1, processSizes[i]);
+        if (allocation[i] != -1)
+            printf("%d\n", allocation[i] + 1);
+        else
+            printf("Not Allocated\n");
+    }
+}
+
 void firstFit(int blockSizes[], int m, int processSizes[], int n) {
     int allocation[n];
 
     for (int i = 0; i < n; i++) {
-        allocation[i] =
-            -1; 
+        allocation[i] = -1;
         for (int j = 0; j < m; j++) {
             if (blockSizes[j] >= processSizes[i]) {
                 allocation[i] = j;
@@ -15,78 +25,37 @@ void firstFit(int blockSizes[], int m, int processSizes[], int n) {
         }
     }
 
-    printf("\nProcess No.\tProcess Size\tBlock no.\n");
-    for (int i = 0; i < n; i++) {
-        printf("%d\t\t%d\t\t", i + 1, processSizes[i]);
-        if (allocation[i] != -1)
-            printf("%d\n", allocation[i] + 1);
-        else
-            printf("Not Allocated\n");
-    }
+    print_table(processSizes, allocation, n);
 }
 
-void bestFit(int blockSizes[], int m, int processSizes[], int n) {
+void best_worst_Fit(int blockSizes[], int m, int processSizes[], int n,
+                    int type) {
     int allocation[n];
 
     for (int i = 0; i < n; i++) {
-        allocation[i] =
-            -1;
-        int bestIdx = -1;
+        allocation[i] = -1;
+        int index = -1;
         for (int j = 0; j < m; j++) {
             if (blockSizes[j] >= processSizes[i]) {
-                if (bestIdx == -1 || blockSizes[bestIdx] > blockSizes[j])
-                    bestIdx = j;
+                if ((type == 1 &&
+                         (index == -1 || blockSizes[index] > blockSizes[j]) ||
+                     (type == 2 &&
+                      (index == -1 || blockSizes[index] < blockSizes[j]))))
+                    index = j;
             }
         }
 
-        if (bestIdx != -1) {
-            allocation[i] = bestIdx;
-            blockSizes[bestIdx] -= processSizes[i];
+        if (index != -1) {
+            allocation[i] = index;
+            blockSizes[index] -= processSizes[i];
         }
     }
 
-    printf("\nProcess No.\tProcess Size\tBlock no.\n");
-    for (int i = 0; i < n; i++) {
-        printf("%d\t\t%d\t\t", i + 1, processSizes[i]);
-        if (allocation[i] != -1)
-            printf("%d\n", allocation[i] + 1);
-        else
-            printf("Not Allocated\n");
-    }
-}
-
-void worstFit(int blockSizes[], int m, int processSizes[], int n) {
-    int allocation[n];
-
-    for (int i = 0; i < n; i++) {
-        allocation[i] =
-            -1;
-        int worstIdx = -1;
-        for (int j = 0; j < m; j++) {
-            if (blockSizes[j] >= processSizes[i]) {
-                if (worstIdx == -1 || blockSizes[worstIdx] < blockSizes[j])
-                    worstIdx = j;
-            }
-        }
-
-        if (worstIdx != -1) {
-            allocation[i] = worstIdx;
-            blockSizes[worstIdx] -= processSizes[i];
-        }
-    }
-
-    printf("\nProcess No.\tProcess Size\tBlock no.\n");
-    for (int i = 0; i < n; i++) {
-        printf("%d\t\t%d\t\t", i + 1, processSizes[i]);
-        if (allocation[i] != -1)
-            printf("%d\n", allocation[i] + 1);
-        else
-            printf("Not Allocated\n");
-    }
+    print_table(processSizes, allocation, n);
 }
 
 int main() {
-    int m, n, choice;
+    int m, n, choice = 0;
 
     printf("Enter the number of memory blocks: ");
     scanf("%d", &m);
@@ -104,28 +73,29 @@ int main() {
         scanf("%d", &processSizes[i]);
     }
 
-    printf("Choose the memory allocation strategy:\n");
-    printf("1. First Fit\n");
-    printf("2. Best Fit\n");
-    printf("3. Worst Fit\n");
-    printf("Enter your choice: ");
-    scanf("%d", &choice);
+    while (choice != 4) {
+        printf("Choose the memory allocation strategy:\n1. First Fit\n2. Best "
+               "Fit\n3. Worst Fit\n4. Exit\nEnter your choice: ");
+        scanf("%d", &choice);
 
-    switch (choice) {
-    case 1:
-        printf("\nFirst Fit:\n");
-        firstFit(blockSizes, m, processSizes, n);
-        break;
-    case 2:
-        printf("\nBest Fit:\n");
-        bestFit(blockSizes, m, processSizes, n);
-        break;
-    case 3:
-        printf("\nWorst Fit:\n");
-        worstFit(blockSizes, m, processSizes, n);
-        break;
-    default:
-        printf("Invalid choice.\n");
+        switch (choice) {
+        case 1:
+            printf("\nFirst Fit:\n");
+            firstFit(blockSizes, m, processSizes, n);
+            break;
+        case 2:
+            printf("\nBest Fit:\n");
+            best_worst_Fit(blockSizes, m, processSizes, n, 1);
+            break;
+        case 3:
+            printf("\nWorst Fit:\n");
+            best_worst_Fit(blockSizes, m, processSizes, n, 2);
+            break;
+        case 4:
+            break;
+        default:
+            printf("Invalid choice.\n");
+        }
     }
 
     return 0;
