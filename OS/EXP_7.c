@@ -6,8 +6,11 @@ void print_frame(int frames[], int num_frames) {
             printf("%d ", frames[k]);
 }
 
-void print_table(int num_pages, int num_frames, int pages[], int frames[]) {
-    int oldest_frame = 0, miss = 0, hits = 0, i, j, k;
+void print_table(int num_pages, int num_frames, int pages[]) {
+    int frames[num_frames], oldest_frame = 0, miss = 0, hits = 0, i, j, k;
+
+    for (i = 0; i < num_frames; i++)
+        frames[i] = -1;
 
     printf("\n|\tPage\t|\tFrames\t|\tStatus\t|\n");
 
@@ -58,11 +61,7 @@ int main() {
     printf("Enter number of frames: ");
     scanf("%d", &num_frames);
 
-    int frames[num_frames];
-    for (i = 0; i < num_frames; i++)
-        frames[i] = -1;
-
-    print_table(num_pages, num_frames, pages, frames);
+    print_table(num_pages, num_frames, pages);
 
     return 0;
 }
