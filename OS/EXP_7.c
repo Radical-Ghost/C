@@ -1,76 +1,68 @@
 #include <stdio.h>
-#include <stdlib.h>
 
-#define MAX_FRAMES 5
+void print_frame(int frames[], int num_frames) {
+    for (int k = 0; k < num_frames; k++)
+        if (frames[k] != -1)
+            printf("%d ", frames[k]);
+}
 
-typedef struct {
-    int value;
-    int inFrame;
-} Page;
-
-int main() {
-    Page frames[MAX_FRAMES];
-    int num_pages, num_frames, page_faults = 0, hits = 0, i, j, k;
-
-    printf("Enter number of pages: ");
-    scanf("%d", &num_pages);
-
-    Page *pages = malloc(num_pages * sizeof(Page));
-
-    printf("Enter pages: ");
-    for (i = 0; i < num_pages; i++) {
-        scanf("%d", &pages[i].value);
-        pages[i].inFrame = 0;
-    }
-
-    printf("Enter number of frames: ");
-    scanf("%d", &num_frames);
-
-    for (i = 0; i < num_frames; i++) {
-        frames[i].value = -1;
-        frames[i].inFrame = 0;
-    }
-
-    int oldest_frame = 0;
+void print_table(int num_pages, int num_frames, int pages[], int frames[]) {
+    int oldest_frame = 0, miss = 0, hits = 0, i, j, k;
 
     printf("\n|\tPage\t|\tFrames\t|\tStatus\t|\n");
-    for (i = 0; i < num_pages; i++) {
-        int page = pages[i].value;
-        int hit = 0;
 
-        printf("|\t%d\t|\t", page);
+    for (i = 0; i < num_pages; i++) {
+        int hit = 0;
+        printf("|\t%d\t|\t", pages[i]);
 
         for (j = 0; j < num_frames; j++) {
-            if (frames[j].value == page) {
+            if (frames[j] == pages[i]) {
                 hit = 1;
                 hits++;
-                for (k = 0; k < num_frames; k++) {
-                    printf("%d ", frames[k].value);
-                }
+
+                print_frame(frames, num_frames);
+
                 printf("\t|\tH\t|\n");
                 break;
             }
         }
 
         if (!hit) {
-            frames[oldest_frame].value = page;
-            frames[oldest_frame].inFrame = 1;
+            frames[oldest_frame] = pages[i];
             oldest_frame = (oldest_frame + 1) % num_frames;
-            page_faults++;
+            miss++;
 
-            for (k = 0; k < num_frames; k++) {
-                printf("%d ", frames[k].value);
-            }
+            print_frame(frames, num_frames);
+
             printf("\t|\tM\t|\n");
         }
     }
 
-    printf("\n\nPage Faults: %d", page_faults);
+    printf("\n\nPage Faults: %d", miss);
     printf("\nHits: %d", hits);
     printf("\nHit Ratio: %.2f%%", (float)hits / num_pages * 100);
-    printf("\nMiss Ratio: %.2f%%", (float)page_faults / num_pages * 100);
+    printf("\nMiss Ratio: %.2f%%", (float)miss / num_pages * 100);
+}
 
-    free(pages);
+int main() {
+    int num_pages, num_frames, i;
+
+    printf("Enter number of pages: ");
+    scanf("%d", &num_pages);
+
+    int pages[num_pages];
+    printf("Enter pages: ");
+    for (i = 0; i < num_pages; i++)
+        scanf("%d", &pages[i]);
+
+    printf("Enter number of frames: ");
+    scanf("%d", &num_frames);
+
+    int frames[num_frames];
+    for (i = 0; i < num_frames; i++)
+        frames[i] = -1;
+
+    print_table(num_pages, num_frames, pages, frames);
 
     return 0;
 }
