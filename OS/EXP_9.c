@@ -55,7 +55,7 @@ void best_worst_Fit(int blockSizes[], int m, int processSizes[], int n,
 }
 
 int main() {
-    int m, n, choice = 0;
+    int m, n, choice;
 
     printf("Enter the number of memory blocks: ");
     scanf("%d", &m);
@@ -73,29 +73,27 @@ int main() {
         scanf("%d", &processSizes[i]);
     }
 
-    while (choice != 4) {
-        printf("Choose the memory allocation strategy:\n1. First Fit\n2. Best "
-               "Fit\n3. Worst Fit\n4. Exit\nEnter your choice: ");
-        scanf("%d", &choice);
+    printf("Choose the memory allocation strategy:\n1. First Fit\n2. Best "
+           "Fit\n3. Worst Fit\n4. Exit\nEnter your choice: ");
+    scanf("%d", &choice);
 
-        switch (choice) {
-        case 1:
-            printf("\nFirst Fit:\n");
-            firstFit(blockSizes, m, processSizes, n);
-            break;
-        case 2:
-            printf("\nBest Fit:\n");
-            best_worst_Fit(blockSizes, m, processSizes, n, 1);
-            break;
-        case 3:
-            printf("\nWorst Fit:\n");
-            best_worst_Fit(blockSizes, m, processSizes, n, 2);
-            break;
-        case 4:
-            break;
-        default:
-            printf("Invalid choice.\n");
-        }
+    switch (choice) {
+    case 1:
+        printf("\nFirst Fit:\n");
+        firstFit(blockSizes, m, processSizes, n);
+        break;
+    case 2:
+        printf("\nBest Fit:\n");
+        best_worst_Fit(blockSizes, m, processSizes, n, 1);
+        break;
+    case 3:
+        printf("\nWorst Fit:\n");
+        best_worst_Fit(blockSizes, m, processSizes, n, 2);
+        break;
+    case 4:
+        break;
+    default:
+        printf("Invalid choice.\n");
     }
 
     return 0;
