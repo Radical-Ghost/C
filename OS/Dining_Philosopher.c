@@ -1,10 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int chopstick[5];
-int chop_owner[5];
+int chopstick[5] = {1, 1, 1, 1, 1};
+int chop_owner[5] = {-1, -1, -1, -1, -1};
+
 int wait(int p) {
-    if (chopstick[p] != 0) {
+    if (chopstick[p] == 1) {
         chopstick[p] = 0;
         return 0;
     }
@@ -12,83 +13,82 @@ int wait(int p) {
 }
 
 int signal(int q) {
-    if (chopstick[q] != 1) {
+    if (chopstick[q] == 0) {
         chopstick[q] = 1;
         return 0;
     }
-    printf("\n_Neighbour is already eating!");
     return 1;
 }
 
-void eat(int chopstick[5]) {
-    int p, i;
-    printf("\nChopsticks available:\n");
-    for (i = 0; i < 5; i++) {
-        printf("%d ", chopstick[i]);
-    }
-    printf("\nChopsticks owner available:\n");
-    for (i = 0; i < 5; i++) {
-        printf("%d ", chop_owner[i]);
-    }
-    printf("\nWhich philosopher wants to eat?\n");
+void eat() {
+    int p;
+
+    printf("\nEnter the philosopher number who wants to eat: ");
     scanf("%d", &p);
-    int a = wait(p);
-    if (a == 1 && chop_owner[p] != p) {
-        printf("\nRequired chopstick is not available!");
+
+    if (p < 0 || p >= 5) {
+        printf("\nInvalid philosopher number!\n");
         return;
     }
+
+    int a = wait(p);
     int b = wait((p + 1) % 5);
-    if (a == 1 && b == 1) {
-        printf("\nPhilosopher%d is already eating!", p);
-    } else if (a == 0 && b == 0) {
-        chop_owner[p] = p;
-        chop_owner[(p + 1) % 5] = p;
-        printf("\nPhilosopher %d has started eating!\n", p);
-    } else {
-        chop_owner[p] = p;
-        printf("\nRight chopstick is unavailable!\n");
-    }
-}
 
-void think(int chopstick[5]) {
-    int q;
-    printf("\nWhich philosopher doesn't want to eat?\n");
-    scanf("%d", &q);
-    if (q == chop_owner[q]) {
-
-        int r = signal(q);
-        int s = signal((q + 1) % 5);
-        if (r == 1 && s == 1) {
-            printf("\nChopsticks are already available for eating.\n");
+    if (a == 0 && b == 0) {
+        if (chop_owner[p] == -1 && chop_owner[(p + 1) % 5] == -1) {
+            chop_owner[p] = p;
+            chop_owner[(p + 1) % 5] = p;
+            printf("\nPhilosopher %d has started eating!\n", p);
         } else {
-            printf("Philosopher %d has started thinking\n", q);
+            printf("\nPhilosopher %d is already eating!\n", p);
         }
     } else {
-        printf("\nNeighbour is already eating!");
+        printf("\nRequired chopsticks are not available for philosopher %d!\n",
+               p);
+        chopstick[p] = 1;
+        chopstick[(p + 1) % 5] = 1;
     }
 }
-int main() {
-    int i, choice;
-    for (i = 0; i < 5; i++) {
-        chopstick[i] = 1;
+
+void think() {
+    int q;
+
+    printf("\nEnter the philosopher number who wants to think: ");
+    scanf("%d", &q);
+
+    if (q < 0 || q >= 5) {
+        printf("\nInvalid philosopher number!\n");
+        return;
     }
+
+    if (chop_owner[q] == q && chop_owner[(q + 1) % 5] == q) {
+        signal(q);
+        signal((q + 1) % 5);
+        chop_owner[q] = -1;
+        chop_owner[(q + 1) % 5] = -1;
+        printf("\nPhilosopher %d has started thinking!\n", q);
+    } else {
+        printf("\nPhilosopher %d cannot think as not owning both chopsticks!\n",
+               q);
+    }
+}
+
+int main() {
+    int choice;
+
     while (1) {
-        printf("\n---Select activity---\n");
-        printf("\n1. Philosopher wants to eat\n");
-        printf("\n2. Philosopher wants to think\n");
-        printf("\n3. EXIT\n");
-        printf("\nSelect choice: ");
+        printf("---Select activity---\n1. Philosopher wants to eat\n2. "
+               "Philosopher wants to think\n3. EXIT\nSelect choice: ");
         scanf("%d", &choice);
         switch (choice) {
         case 1:
-            eat(chopstick);
+            eat();
             break;
         case 2:
-            think(chopstick);
+            think();
             break;
         case 3:
             exit(0);
-            break;
         default:
             printf("\nInvalid Choice\n");
             break;

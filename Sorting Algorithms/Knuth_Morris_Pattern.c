@@ -2,33 +2,33 @@
 #include <string.h>
 #define MAX 30
 
-void computeLPSArray(char *pat, int M, int *lps) {
-    int i = 1, len = 0;
+void computeLPS(int *pat, int M, int *lps) {
+    int i = 1, j = 0;
     lps[0] = 0;
 
     while (i < M) {
-        if (pat[i] == pat[len])
-            lps[i++] = ++len;
-        else if (len != 0)
-            len = lps[len - 1];
+        if (pat[i] == pat[j])
+            lps[i++] = ++j;
+        else if (j != 0)
+            j = lps[j - 1];
         else
             lps[i++] = 0;
     }
 }
 
-void KMP(char *txt, char *pat) {
+void KMP(int *txt, int *pat) {
     int M = strlen(pat), N = strlen(txt), lps[M], i = 0, j = 0;
 
-    computeLPSArray(pat, M, lps);
+    computeLPS(pat, M, lps);
 
     while (i < N) {
-        if (pat[j] == txt[i])
+        if (txt[i] == pat[j])
             i++, j++;
 
         if (j == M) {
-            printf("Pattern found at index %d\n", i - M + 1);
+            printf("Pattern found at index %d\n", i - j);
             j = lps[j - 1];
-        } else if (i < N && pat[j] != txt[i]) {
+        } else if (i < N && txt[i] != pat[j]) {
             if (j != 0)
                 j = lps[j - 1];
             else

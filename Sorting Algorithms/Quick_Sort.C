@@ -17,7 +17,7 @@ int partition(int arr[], int start, int end) {
     // Placing pivot to right position
     int pivotIndex = start + smallerThanPivotCount;
     swap(&arr[start], &arr[pivotIndex]);
-
+    
     //Sorting left and right parts of pivot
     while(start < pivotIndex && end > pivotIndex) {
         while (arr[start] < pivot)

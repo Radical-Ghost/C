@@ -57,7 +57,7 @@ void bellman_ford(int n, int G[n][n], int start_node) {
     // Check for negative weight cycles
     for (j = 0; j < n; j++) {
         for (k = 0; k < n; k++) {
-            if (G[j][k] != 0 && dist[j] != inf && dist[j] + G[j][k] < dist[k]) {
+            if (G[j][k] && dist[j] != inf && dist[j] + G[j][k] < dist[k]) {
                 printf("Graph contains a negative-weight cycle\n");
                 return;
             }
